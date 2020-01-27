@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 def to_alphanum(input):
     return input.translate(str.maketrans('', '', string.punctuation))
 
+# TODO move edge cases to config?
 edge_cases = {
     'The AllAmerican Rejects': 'The All American Rejects',
     'blink182': 'blink-182',

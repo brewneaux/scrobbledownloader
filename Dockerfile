@@ -13,6 +13,12 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./scrobbledownload ./scrobbledownload
+COPY ./setup.py ./setup.py
 COPY ./main.py ./main.py
+COPY ./README.md ./README.md
 
-CMD ["python", "./main.py"]
+RUN pip wheel --no-deps .
+
+RUN pip install . 
+
+ENTRYPOINT ["download-scrobbles"]
