@@ -1,13 +1,18 @@
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
+"""
+All of the SQLAlchemy models to represent the data we are saving.
+"""
 from sqlalchemy import Column, String, Integer, ForeignKey, Date, DateTime
+from sqlalchemy.engine import Engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
 
-
 class ArtistTag(Base):
+    """
+    Represents the various tags that are attached to an Artist.
+    """
     __tablename__ = "artist_tags"
 
     id = Column(Integer(), primary_key=True)
@@ -71,23 +76,24 @@ class Track(Base):
     name = Column(String(1000))
     spotify_id = Column(String(100))
     mbid = Column(String(100), index=True)
-    artist_id = Column(Integer(), ForeignKey('artists.id'))
-    album_id = Column(Integer(), ForeignKey('albums.id'))
-    artist = relationship('Artist', foreign_keys=[artist_id])
-    album = relationship('Album', foreign_keys=[album_id])
+    artist_id = Column(Integer(), ForeignKey("artists.id"))
+    album_id = Column(Integer(), ForeignKey("albums.id"))
+    artist = relationship("Artist", foreign_keys=[artist_id])
+    album = relationship("Album", foreign_keys=[album_id])
     tags = relationship("TrackTag")
 
 
 class Listen(Base):
-    __tablename__ = 'listens'
+    __tablename__ = "listens"
 
     id = Column(Integer(), primary_key=True)
     dt = Column(DateTime())
-    track_id = Column(Integer(), ForeignKey('tracks.id'))
-    track = relationship('Track')
+    track_id = Column(Integer(), ForeignKey("tracks.id"))
+    track = relationship("Track")
+
 
 class UnfoundTracks(Base):
-    __tablename__ = 'unfoundtracks'
+    __tablename__ = "unfoundtracks"
 
     id = Column(Integer(), primary_key=True)
     track_name = Column(String(1000))
@@ -95,10 +101,15 @@ class UnfoundTracks(Base):
     dt = Column(DateTime())
     artist = Column(String(1000))
     artist_mbid = Column(String(1000))
-    album = Column(String(1000)) 
-    album_mbid = Column(String(1000)) 
+    album = Column(String(1000))
+    album_mbid = Column(String(1000))
 
 
 def create_all(engine):
-    # Base.metadata.drop_all(engine)
+    """
+    Creats all of the models.
+
+    Args:
+        engine (Engine): A built SQLAlchemy engine
+    """
     Base.metadata.create_all(engine)
