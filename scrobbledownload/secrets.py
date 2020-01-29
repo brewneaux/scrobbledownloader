@@ -52,5 +52,3 @@ def get_spotify_creds(secrets: Secrets) -> SpotifyClientCredentials:
     if not spotify_creds:
         spotify_creds = SpotifyClientCredentials(secrets.spotify_client_id, secrets.spotify_client_secret)
     return spotify_creds
-
-

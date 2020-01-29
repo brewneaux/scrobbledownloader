@@ -14,7 +14,7 @@ from scrobbledownload.models.track import TrackMetadata
 from scrobbledownload.secrets import Secrets, load_secrets
 
 
-def initialize_logger(log_level: str=logging.INFO):
+def initialize_logger(log_level: str = logging.INFO):
     """
     Initialize the logger for the application. We sendeverything through stderr since this is designed for Docker.
     Args:

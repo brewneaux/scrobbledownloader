@@ -89,7 +89,16 @@ class TrackMetadata(object):
     """
     Represents all of the data for a class
     """
-    def __init__(self, track_name: str, track_artist: str, track_album: str, mbid: Optional[str], session: Session, spotify_credentials: SpotifyClientCredentials):
+
+    def __init__(
+        self,
+        track_name: str,
+        track_artist: str,
+        track_album: str,
+        mbid: Optional[str],
+        session: Session,
+        spotify_credentials: SpotifyClientCredentials,
+    ):
         """
         Get or create all of a tracks objects to be stored in the database
         Args:

@@ -16,6 +16,7 @@ class ScrobbleTrack(object):
     """
     A single Scrobble Track
     """
+
     track_name: str
     track_mbid: str
     date: datetime
@@ -30,6 +31,7 @@ class Scrobbles(object):
     """
     A collection of scrobble responses
     """
+
     page: int
     perPage: int
     totalPages: int
@@ -42,6 +44,7 @@ class ScrobbleDownloader(object):
 
     todo prob rename this to be something closer to LastfmApi or something
     """
+
     def __init__(self, secrets: Secrets):
         """Get scrobbles
         
@@ -50,7 +53,7 @@ class ScrobbleDownloader(object):
         """
         self.secrets = secrets
 
-    def get(self, page: int=1) -> Scrobbles:
+    def get(self, page: int = 1) -> Scrobbles:
         """Get scrobbles by page
         
         Args:
@@ -59,9 +62,11 @@ class ScrobbleDownloader(object):
         Returns:
             Scrobbles: the scrobbles
         """
-        url = f"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&" \
-              f"user={self.secrets.lastfm_username}&api_key={self.secrets.lastfm_api_key}" \
-              f"&format=json&limit={self.secrets.scrobbles_per_page}&page={page}"
+        url = (
+            f"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&"
+            f"user={self.secrets.lastfm_username}&api_key={self.secrets.lastfm_api_key}"
+            f"&format=json&limit={self.secrets.scrobbles_per_page}&page={page}"
+        )
         req = requests.get(url)
         req.raise_for_status()
         scrobble_json = req.json()

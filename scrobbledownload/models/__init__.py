@@ -13,6 +13,7 @@ class ArtistTag(Base):
     """
     Represents the various tags that are attached to an Artist.
     """
+
     __tablename__ = "artist_tags"
 
     id = Column(Integer(), primary_key=True)
