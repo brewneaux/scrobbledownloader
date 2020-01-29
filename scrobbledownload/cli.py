@@ -1,7 +1,10 @@
+"""
+THe comand line interface for the scrobble downloader.
+"""
 import click
 from scrobbledownload import initialize_logger, create_sql_session
 from scrobbledownload.download import download_tracks, test_downloading
-from scrobbledownload.secrets import load_secrets, set_secrets_path
+from scrobbledownload.secrets import load_secrets
 import logging
 
 
@@ -19,6 +22,7 @@ def cli(ctx, debug, secrets_path):
     """
     Entrypoint for the application
     Args:
+        ctx (click.context):
         debug:
         secrets_path:
     """
@@ -42,7 +46,8 @@ def download(secrets):
 @click.pass_obj
 def download_test(secrets):
     """
-
+    shoundt exist
+    todo remove me
     """
     session = create_sql_session(secrets.db_connection_string)
     test_downloading(session, secrets)

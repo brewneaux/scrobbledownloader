@@ -1,10 +1,16 @@
+"""
+Downloads and processes tracks
+
+TODO make this a downloader object
+"""
 import logging
 from datetime import datetime
 
-from sqlalchemy.sql import func
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
+
 from scrobbledownload.models import Listen, UnfoundTracks
-from scrobbledownload.models.scrobbles import ScrobbleDownloader, ScrobbleTrack, Scrobbles
+from scrobbledownload.models.scrobbles import ScrobbleDownloader, ScrobbleTrack
 from scrobbledownload.models.track import TrackMetadata
 from scrobbledownload.secrets import spotify_creds, Secrets
 
@@ -65,7 +71,7 @@ def get_last_downloaded_listen(session: Session) -> datetime:
     return last_listen_downloaded
 
 
-def Dowdownload_tracks(session: Session, secrets: Secrets):
+def download_tracks(session: Session, secrets: Secrets):
     """
     Downloads and processes tracks.  It does so a page at a time, breaking if has caught up or run out of data.
     Args:
@@ -102,6 +108,15 @@ def Dowdownload_tracks(session: Session, secrets: Secrets):
 
 
 def test_downloading(session, secrets):
+    """
+    I'm not real
+    Args:
+        session:
+        secrets:
+
+    Returns:
+
+    """
     last_listen_downloaded = get_last_downloaded_listen(session)
 
     logger.info(f"Downloading scrobbles from now back to {last_listen_downloaded}")

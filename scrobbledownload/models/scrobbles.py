@@ -1,3 +1,8 @@
+"""
+All classes responsible for scrobble information
+
+TODO reorganize this class
+"""
 import requests
 from dataclasses import dataclass
 from datetime import datetime
@@ -8,6 +13,9 @@ from scrobbledownload.secrets import Secrets
 
 @dataclass
 class ScrobbleTrack(object):
+    """
+    A single Scrobble Track
+    """
     track_name: str
     track_mbid: str
     date: datetime
@@ -19,6 +27,9 @@ class ScrobbleTrack(object):
 
 @dataclass
 class Scrobbles(object):
+    """
+    A collection of scrobble responses
+    """
     page: int
     perPage: int
     totalPages: int
@@ -26,6 +37,11 @@ class Scrobbles(object):
 
 
 class ScrobbleDownloader(object):
+    """
+    Downloads scrobbles from lastfm.
+
+    todo prob rename this to be something closer to LastfmApi or something
+    """
     def __init__(self, secrets: Secrets):
         """Get scrobbles
         

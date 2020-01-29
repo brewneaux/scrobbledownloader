@@ -2,7 +2,7 @@
 All of the SQLAlchemy models to represent the data we are saving.
 """
 from sqlalchemy import Column, String, Integer, ForeignKey, Date, DateTime
-from sqlalchemy.engine import Engine
+from sqlalchemy.engine.base import Engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 

@@ -1,12 +1,16 @@
+"""
+Handles a single track, getting the necessary data from wherever.
+"""
 import hashlib
 import logging
 import string
-from sqlalchemy.orm import Session
-from spotipy.oauth2 import SpotifyClientCredentials
-from typing import Optional, List
+from datetime import date
+from typing import Optional
+
 from dateutil.parser import parse
 from spotipy import Spotify
-from datetime import date
+from spotipy.oauth2 import SpotifyClientCredentials
+from sqlalchemy.orm import Session
 
 from scrobbledownload.models import (
     Track,
@@ -46,7 +50,8 @@ edge_cases = {
 
 def fix_weird_edgecase(artist: str) -> str:
     """
-    Looks up Artist edgecases, and returns the 'fixed' version.  LastFM sometimes has Arists listed differently than Spotify.
+    Looks up Artist edgecases, and returns the 'fixed' version.
+    LastFM sometimes has Arists listed differently than Spotify.
     Args:
         artist (str):
 
@@ -56,7 +61,7 @@ def fix_weird_edgecase(artist: str) -> str:
     return edge_cases.get(artist, artist)
 
 
-def parse_date(date: str, precision: str) -> date:
+def parse_date(dt_string: str, precision: str) -> date:
     """
     Parse a date string from lastfm into a datetime object.
     Args:
@@ -66,7 +71,7 @@ def parse_date(date: str, precision: str) -> date:
     Returns:
         date
     """
-    dt = parse(date).date()
+    dt = parse(dt_string).date()
     if precision == "year":
         return dt.replace(month=1, day=1)
     if precision == "month":
@@ -75,11 +80,15 @@ def parse_date(date: str, precision: str) -> date:
         return dt
 
 
+# noinspection PyMissingOrEmptyDocstring
 class TrackNotFoundError(Exception):
     pass
 
 
 class TrackMetadata(object):
+    """
+    Represents all of the data for a class
+    """
     def __init__(self, track_name: str, track_artist: str, track_album: str, mbid: Optional[str], session: Session, spotify_credentials: SpotifyClientCredentials):
         """
         Get or create all of a tracks objects to be stored in the database
@@ -118,6 +127,8 @@ class TrackMetadata(object):
         I did some testing and found that it would usually find the right thing if you started chopping off words.  It
         didnt seem to every find the _wrong_ thing, so I went with it.
 
+        todo this is doing too much
+
         Returns:
             dict
         """
@@ -147,6 +158,9 @@ class TrackMetadata(object):
     def get_or_create_track(self) -> Track:
         """
         Gets or creates a track object from the database
+
+        todo can these be genericised a bit?
+
         Returns:
             Track
         """

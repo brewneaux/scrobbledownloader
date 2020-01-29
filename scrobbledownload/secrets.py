@@ -1,3 +1,6 @@
+"""
+Secrets that are loaded from a configuration file
+"""
 from dataclasses import dataclass
 from spotipy.oauth2 import SpotifyClientCredentials
 import json
@@ -6,6 +9,7 @@ import os
 spotify_creds = None
 
 
+# noinspection PyMissingOrEmptyDocstring
 @dataclass
 class Secrets(object):
     lastfm_api_key: str
@@ -15,6 +19,7 @@ class Secrets(object):
     spotify_client_secret: str
     scrobbles_per_page: int
     db_connection_string: str
+
 
 def load_secrets(secrets_path: str):
     """
@@ -41,8 +46,11 @@ def load_secrets(secrets_path: str):
     return secrets
 
 
-def get_spotify_creds(secrets):
+def get_spotify_creds(secrets: Secrets) -> SpotifyClientCredentials:
+    """Gets spotify credentials for API interaction"""
     global spotify_creds
-    spotify_creds = SpotifyClientCredentials(secrets.spotify_client_id, secrets.spotify_client_secret)
+    if not spotify_creds:
+        spotify_creds = SpotifyClientCredentials(secrets.spotify_client_id, secrets.spotify_client_secret)
+    return spotify_creds
 
 
