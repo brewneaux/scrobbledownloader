@@ -1,0 +1,2 @@
+class Genius(object):
+    pass

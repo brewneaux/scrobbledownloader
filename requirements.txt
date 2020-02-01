@@ -3,3 +3,4 @@ requests
 spotipy
 sqlalchemy
 click
+pyyaml

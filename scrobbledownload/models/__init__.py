@@ -2,11 +2,16 @@
 All of the SQLAlchemy models to represent the data we are saving.
 """
 from sqlalchemy import Column, String, Integer, ForeignKey, Date, DateTime
+from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from datetime import datetime
+
 
 Base = declarative_base()
+
 
 
 class ArtistTag(Base):
@@ -20,6 +25,10 @@ class ArtistTag(Base):
     artist_id = Column(Integer(), ForeignKey("artists.id"), nullable=False)
     tag = Column(String(1000))
     artist = relationship("Artist")
+
+    @classmethod
+    def get_by_mbid(cls, session, artist_mbd):
+        pass
 
 
 class ArtistGenre(Base):
@@ -92,6 +101,20 @@ class Listen(Base):
     track_id = Column(Integer(), ForeignKey("tracks.id"))
     track = relationship("Track")
 
+    @classmethod
+    def get_last_listen(cls, session: Session) -> datetime:
+        """
+        Get the max listen date from the database to use as a loop starting point.
+        Args:
+            session (Session): The SQLAlchemy ORM session
+
+        Returns:
+            datetime
+        """
+        last_listen_downloaded = session.query(func.max(cls.dt)).scalar()
+        if last_listen_downloaded is None:
+            last_listen_downloaded = datetime(1970, 1, 1)
+        return last_listen_downloaded
 
 class UnfoundTracks(Base):
     __tablename__ = "unfoundtracks"

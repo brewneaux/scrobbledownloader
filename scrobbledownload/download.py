@@ -33,7 +33,7 @@ def process_track(track: ScrobbleTrack, session: Session):
         spotify_credentials=spotify_creds,
     ).get_or_create_track()
     session.add(track_metadata)
-    listen = Listen(dt=track.date, track=track_metadata)
+    listen = Listen(dt=track.listen_dt, track=track_metadata)
     session.add(listen)
 
 
@@ -47,7 +47,7 @@ def save_unfound_track(track: ScrobbleTrack, session: Session):
     t = UnfoundTracks(
         track_name=track.track_name,
         track_mbid=track.track_mbid,
-        dt=track.date,
+        dt=track.listen_dt,
         artist=track.artist,
         artist_mbid=track.artist_mbid,
         album=track.album,
@@ -90,7 +90,7 @@ def download_tracks(session: Session, secrets: Secrets):
         logger.info(f"\n\nGot {len(scrobbles.tracks)} scrobbles\nPage {page} of {scrobbles.totalPages}")
 
         for t in scrobbles.tracks:
-            if t.date < last_listen_downloaded:
+            if t.listen_dt < last_listen_downloaded:
                 logger.info("Caught up, breaking")
                 keep_going = False
                 break

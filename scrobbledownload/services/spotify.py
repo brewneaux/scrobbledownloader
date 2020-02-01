@@ -1,0 +1,2 @@
+class Spotify(object):
+    pass

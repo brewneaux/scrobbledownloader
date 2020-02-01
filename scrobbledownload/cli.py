@@ -4,7 +4,7 @@ THe comand line interface for the scrobble downloader.
 import click
 from scrobbledownload import initialize_logger, create_sql_session
 from scrobbledownload.download import download_tracks, test_downloading
-from scrobbledownload.secrets import load_secrets
+from scrobbledownload.secrets import Secrets
 import logging
 
 
@@ -17,8 +17,7 @@ import logging
     required=True,
     default="/run/secrets.json",
 )
-@click.pass_context
-def cli(ctx, debug, secrets_path):
+def cli(debug, secrets_path):
     """
     Entrypoint for the application
     Args:
@@ -29,25 +28,25 @@ def cli(ctx, debug, secrets_path):
     log_level = logging.DEBUG if debug else logging.INFO
     initialize_logger(log_level)
     logging.getLogger(__name__).info(f"Loading secrets from {secrets_path}")
-    ctx.obj = load_secrets(secrets_path)
+    Secrets.set_filepath(secrets_path)
 
 
 @cli.command()
-@click.pass_obj
-def download(secrets):
+def download():
     """
     Download new scrobbles.
     """
+    secrets = Secrets()
     session = create_sql_session(secrets.db_connection_string)
     download_tracks(session, secrets)
 
 
 @cli.command()
-@click.pass_obj
-def download_test(secrets):
+def download_test():
     """
     shoundt exist
     todo remove me
     """
+    secrets = Secrets()
     session = create_sql_session(secrets.db_connection_string)
     test_downloading(session, secrets)

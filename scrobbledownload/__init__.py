@@ -10,8 +10,8 @@ from sqlalchemy.orm import sessionmaker
 from scrobbledownload.models import Listen, UnfoundTracks
 from scrobbledownload.models import create_all
 from scrobbledownload.models.scrobbles import ScrobbleDownloader
-from scrobbledownload.models.track import TrackMetadata
-from scrobbledownload.secrets import Secrets, load_secrets
+# from scrobbledownload.models.track import TrackMetadata
+# from scrobbledownload.secrets import Secrets, load_secrets
 
 
 def initialize_logger(log_level: str = logging.INFO):
