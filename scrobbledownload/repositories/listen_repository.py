@@ -8,7 +8,7 @@ from scrobbledownload.models import Listen
 from scrobbledownload.models.scrobbles import ScrobbleTrack
 
 
-class TrackRepository(object):
+class ListenRepository(object):
     def __init__(self, username: str, session: Session, secrets: Secrets):
         self._username = username
         self._session = session

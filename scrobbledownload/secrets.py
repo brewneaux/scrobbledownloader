@@ -32,7 +32,7 @@ class Secrets(object):
         """
         Secrets object - holds all the keys and settings that are necessary for interacting with the APIs
         """
-        _dict = self.load()
+        self._dict = self.load()
         self.validate()
         self.lastfm_api_key = self._dict['lastfm_api_key']
         self.lastfm_api_secret = self._dict['lastfm_api_secret']

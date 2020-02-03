@@ -26,10 +26,6 @@ class ArtistTag(Base):
     tag = Column(String(1000))
     artist = relationship("Artist")
 
-    @classmethod
-    def get_by_mbid(cls, session, artist_mbd):
-        pass
-
 
 class ArtistGenre(Base):
     __tablename__ = "artist_genres"
@@ -43,12 +39,26 @@ class Artist(Base):
     __tablename__ = "artists"
 
     id = Column(Integer(), primary_key=True)
-    name = Column(String(1000))
+    name = Column(String(1000), index=True)
     popularity = Column(Integer())
     spotify_id = Column(String(100), index=True)
 
     tags = relationship("ArtistTag")
     genres = relationship("ArtistGenre")
+
+    @classmethod
+    def get_by_name(cls, name: str, session: Session):
+        """
+        Get the artist object by the name of the artist
+        Args:
+            name (str): The name of the artist
+            session (Session): The SQLAlchemy ORM session
+
+        Returns:
+            Artist
+        """
+        result = session.query(cls).filter_by(name=name).first()
+        return result
 
 
 class AlbumGenre(Base):
@@ -86,6 +96,7 @@ class Track(Base):
     name = Column(String(1000))
     spotify_id = Column(String(100))
     mbid = Column(String(100), index=True)
+    generated_id = Column(String(100), index=True)
     artist_id = Column(Integer(), ForeignKey("artists.id"))
     album_id = Column(Integer(), ForeignKey("albums.id"))
     artist = relationship("Artist", foreign_keys=[artist_id])
