@@ -1,5 +1,8 @@
 # scrobbledownload
 
+[![Actions Status](https://github.com/brewneaux/scrobbledownloader/workflows/test/badge.svg)](https://github.com/{owner}/{repo}/actions)
+
+
 This is a Python Docker app for downloading last.fm listens, correlating with the Spotify API (which has much cleaner metadata about tracks than last.fm) for track information, and downloading lyrics from genius.com if it can.
 
 The data is stored via SQLAlchemy, and can be configured for any database that SQLalchemy supports.  
