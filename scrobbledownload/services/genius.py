@@ -1,2 +1,4 @@
 class Genius(object):
-    pass
+    """
+    todo like, build me?
+    """

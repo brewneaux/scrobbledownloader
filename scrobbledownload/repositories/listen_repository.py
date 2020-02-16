@@ -1,6 +1,6 @@
 from scrobbledownload.services import LastFM, Genius, Spotify
 from scrobbledownload.secrets import Secrets
-from scrobbledownload.models.track import Track
+from scrobbledownload.services.track import Track
 from typing import List
 from sqlalchemy.orm import Session
 import logging

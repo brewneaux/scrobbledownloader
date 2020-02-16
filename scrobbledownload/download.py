@@ -11,7 +11,7 @@ from sqlalchemy.sql import func
 
 from scrobbledownload.models import Listen, UnfoundTracks
 from scrobbledownload.models.scrobbles import ScrobbleDownloader, ScrobbleTrack
-from scrobbledownload.models.track import TrackMetadata
+from scrobbledownload.services.track import TrackMetadata
 from scrobbledownload.secrets import spotify_creds, Secrets
 
 logger = logging.getLogger(__name__)

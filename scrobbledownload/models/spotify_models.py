@@ -47,3 +47,5 @@ class SpotifyTrack(object):
     spotify_id: str
     duration_ms: int
     popularity: int
+    album_id: str
+    artist_id: str
