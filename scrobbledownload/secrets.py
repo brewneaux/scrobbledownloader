@@ -3,7 +3,7 @@ Secrets that are loaded from a configuration file
 """
 from spotipy.oauth2 import SpotifyClientCredentials
 import yaml
-import os
+from os.path import exists
 
 
 class Secrets(object):
@@ -74,7 +74,7 @@ class Secrets(object):
         Args:
             path (str): a path to the configuration file
         """
-        if not os.path.exists(path):
+        if not exists(path):
             raise FileNotFoundError(f"Configuration file was missing - it was not found at {path}")
         cls._path = path
 
