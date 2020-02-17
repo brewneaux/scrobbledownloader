@@ -1,11 +1,13 @@
+from scrobbledownload.database import get_session
 from scrobbledownload.models import Artist as ArtistModel, ArtistGenre
 from .spotify import Spotify
-from scrobbledownload.database import get_session
+
 
 class Artist(object):
     """
     todo rename to add Service, docstrings
     """
+
     @classmethod
     def _create(cls, session, spotify_artist_id) -> ArtistModel:
         spotify_artist = Spotify.get_artist(spotify_artist_id)
@@ -20,7 +22,6 @@ class Artist(object):
         session.commit()
         return a
 
-
     @classmethod
     def get_artist(cls, spotify_artist_id: str) -> ArtistModel:
         session = get_session()
@@ -29,4 +30,3 @@ class Artist(object):
             return existing
         else:
             return cls._create(session, spotify_artist_id)
-    

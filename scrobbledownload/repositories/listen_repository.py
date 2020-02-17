@@ -1,11 +1,13 @@
-from scrobbledownload.services import LastFM, Genius, Spotify
-from scrobbledownload.secrets import Secrets
-from scrobbledownload.services.track import Track
-from typing import List
-from sqlalchemy.orm import Session
 import logging
+from typing import List
+
+from sqlalchemy.orm import Session
+
 from scrobbledownload.models import Listen
 from scrobbledownload.models.scrobbles import ScrobbleTrack
+from scrobbledownload.secrets import Secrets
+from scrobbledownload.services import LastFM, Genius, Spotify
+from scrobbledownload.services.track import Track
 
 
 class ListenRepository(object):
@@ -16,7 +18,6 @@ class ListenRepository(object):
         self._lastfm_service = LastFM(username, secrets.lastfm_api_key)
         self._genius_service = Genius()
         self._spotify_servie = Spotify()
-
 
     def retrieve_and_store_tracks(self) -> List[Track]:
         """
@@ -29,8 +30,8 @@ class ListenRepository(object):
         """
         last_downloaded = Listen.get_last_listen(self._session)
         logging.getLogger(__name__).info(f"Downloading scrobbles from now back to {last_downloaded}")
-
-        page = 1
+        #
+        # page = 1
 
         while True:
             scrobbles = self._lastfm_service.download_scrobbles(1, self._scrobbles_per_page)
@@ -39,7 +40,6 @@ class ListenRepository(object):
                 if t.listen_datetime < last_downloaded:
                     break
         pass
-
 
     def _get_track_objects(self, scrobbles: List[ScrobbleTrack]) -> List[Track]:
         """

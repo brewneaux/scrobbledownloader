@@ -1,6 +1,6 @@
+from scrobbledownload.database import get_session
 from scrobbledownload.models import Album as AlbumModel, AlbumGenre
 from .spotify import Spotify
-from scrobbledownload.database import get_session
 
 
 class Album(object):
@@ -15,6 +15,7 @@ class Album(object):
             name=spotify_album.name,
             popularity=spotify_album.popularity,
             spotify_id=spotify_album.spotify_id,
+            release_date=spotify_album.release_date,
             genres=genres
         )
         session.add(a)

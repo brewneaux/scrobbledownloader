@@ -3,11 +3,13 @@ All classes responsible for scrobble information
 
 TODO reorganize this class
 """
-import requests
 from dataclasses import dataclass
 from datetime import datetime
-from dateutil.parser import parse
 from typing import List
+
+import requests
+from dateutil.parser import parse
+
 from scrobbledownload.secrets import Secrets
 
 
@@ -46,7 +48,7 @@ class ScrobbleDownloader(object):
 
     def __init__(self, secrets: Secrets):
         """Get scrobbles
-        
+
         Args:
             secrets (scrobbledownload.secrets.Secrets): the secrets class
         """
@@ -54,10 +56,10 @@ class ScrobbleDownloader(object):
 
     def get(self, page: int = 1) -> Scrobbles:
         """Get scrobbles by page
-        
+
         Args:
             page (int, optional): what page we're gettin. Defaults to 1.
-        
+
         Returns:
             Scrobbles: the scrobbles
         """

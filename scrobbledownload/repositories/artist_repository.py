@@ -1,6 +1,7 @@
-from scrobbledownload.models import Artist, ArtistGenre, ArtistTag
-from scrobbledownload.services import Spotify
 from sqlalchemy.orm import Session
+
+from scrobbledownload.models import Artist, ArtistGenre
+from scrobbledownload.services import Spotify
 
 
 class ArtistRepository(object):

@@ -4,15 +4,6 @@ Some initialization functinos for the application
 import logging
 import sys
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from scrobbledownload.models import Listen, UnfoundTracks
-from scrobbledownload.models import create_all
-from scrobbledownload.models.scrobbles import ScrobbleDownloader
-# from scrobbledownload.models.track import TrackMetadata
-# from scrobbledownload.secrets import Secrets, load_secrets
-
 
 def initialize_logger(log_level: int = logging.INFO):
     """

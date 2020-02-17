@@ -1,10 +1,12 @@
-from scrobbledownload import models
-from scrobbledownload.services.spotify import Spotify
-from scrobbledownload.services.genius import Genius
+import hashlib
+
 from sqlalchemy.orm import Session
+
+from scrobbledownload import models
 from scrobbledownload.models.scrobbles import ScrobbleTrack
 from scrobbledownload.services import Artist, Album
-import hashlib
+from scrobbledownload.services.genius import Genius
+from scrobbledownload.services.spotify import Spotify
 
 
 class TrackFactory(object):
@@ -112,4 +114,3 @@ class Track(object):
         return hashlib.sha1(
             f"{self._track_name} - {self._track_artist} on {self._track_album}".encode()
         ).hexdigest()
-

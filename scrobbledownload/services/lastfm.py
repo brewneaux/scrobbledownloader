@@ -1,8 +1,10 @@
-import requests
-from typing import List
-from scrobbledownload.models.scrobbles import ScrobbleTrack, Scrobbles
-from dateutil.parser import parse
 import logging
+from typing import List
+
+import requests
+from dateutil.parser import parse
+
+from scrobbledownload.models.scrobbles import ScrobbleTrack, Scrobbles
 
 
 class LastFM(object):
@@ -46,7 +48,8 @@ class LastFM(object):
         req.raise_for_status()
         scrobble_json = req.json()
         scrobbles = LastFM._handle_lastfm_response(scrobble_json)
-        logging.getLogger(__name__).info(f"Retrieved {len(scrobbles.tracks)} from LastFM API on page {page} of {scrobbles.totalPages}")
+        logging.getLogger(__name__).info(
+            f"Retrieved {len(scrobbles.tracks)} from LastFM API on page {page} of {scrobbles.totalPages}")
         return scrobbles
 
     @staticmethod
@@ -67,7 +70,6 @@ class LastFM(object):
             totalPages=recent_tracks_attr["totalPages"],
             tracks=tracks,
         )
-
 
     @staticmethod
     def _get_tracks(tracks_json) -> List[ScrobbleTrack]:

@@ -1,13 +1,13 @@
-from scrobbledownload.secrets import Secrets
-from spotipy import Spotify as _Spotify
-from typing import List
-from dataclasses import dataclass
-from spotipy.oauth2 import SpotifyClientCredentials
-from scrobbledownload.models.spotify_models import SpotifyArtist, SpotifyAlbum, SpotifyTrack
 import os
-import yaml
-from typing import Dict
 import string
+from typing import Dict
+from typing import List
+
+import yaml
+from spotipy import Spotify as _Spotify
+from spotipy.oauth2 import SpotifyClientCredentials
+
+from scrobbledownload.models.spotify_models import SpotifyArtist, SpotifyAlbum, SpotifyTrack
 
 
 class SpotifyNotFoundExcecption(BaseException):

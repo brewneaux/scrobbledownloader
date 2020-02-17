@@ -1,30 +1,16 @@
 """
 All of the SQLAlchemy models to represent the data we are saving.
 """
-from sqlalchemy import Column, String, Integer, ForeignKey, Date, DateTime
-from sqlalchemy.orm import Session
-from sqlalchemy.sql import func
-from sqlalchemy.engine.base import Engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
 from datetime import datetime
 
+from sqlalchemy import Column, String, Integer, ForeignKey, Date, DateTime
+from sqlalchemy.engine.base import Engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import Session
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 Base = declarative_base()
-
-
-
-class ArtistTag(Base):
-    """
-    Represents the various tags that are attached to an Artist.
-    """
-
-    __tablename__ = "artist_tags"
-
-    id = Column(Integer(), primary_key=True)
-    artist_id = Column(Integer(), ForeignKey("artists.id"), nullable=False)
-    tag = Column(String(1000))
-    artist = relationship("Artist")
 
 
 class ArtistGenre(Base):
@@ -43,7 +29,6 @@ class Artist(Base):
     popularity = Column(Integer())
     spotify_id = Column(String(100), index=True)
 
-    tags = relationship("ArtistTag")
     genres = relationship("ArtistGenre")
 
     @classmethod
@@ -127,6 +112,7 @@ class Listen(Base):
             last_listen_downloaded = datetime(1970, 1, 1)
         return last_listen_downloaded
 
+
 class UnfoundTracks(Base):
     __tablename__ = "unfoundtracks"
 
@@ -140,7 +126,7 @@ class UnfoundTracks(Base):
     album_mbid = Column(String(1000))
 
 
-def create_all(engine):
+def create_all(engine: Engine):
     """
     Creats all of the models.
 

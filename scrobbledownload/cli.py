@@ -1,15 +1,15 @@
 """
 THe comand line interface for the scrobble downloader.
 """
+import logging
+
 import click
+
 from scrobbledownload import initialize_logger
 from scrobbledownload.database import create_sql_session
 from scrobbledownload.download import download_tracks, test_downloading
 from scrobbledownload.secrets import Secrets
-from scrobbledownload.services.track import Track
 from scrobbledownload.services.spotify import Spotify
-from scrobbledownload.services.genius import Genius
-import logging
 
 
 @click.group()
@@ -33,7 +33,6 @@ def cli(debug, secrets_path):
     initialize_logger(log_level)
     logging.getLogger(__name__).info(f"Loading secrets from {secrets_path}")
     Secrets.set_filepath(secrets_path)
-
 
 
 @cli.command()
@@ -65,4 +64,3 @@ def download(replacements_file):
     spotify.set_replacements(replacements_file)
 
     download_tracks(session, secrets)
-
