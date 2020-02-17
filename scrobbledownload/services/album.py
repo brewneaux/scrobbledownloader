@@ -7,6 +7,7 @@ class Album(object):
     """
     todo rename to add Service, docstrings
     """
+
     @classmethod
     def _create(cls, session, spotify_album_id) -> AlbumModel:
         spotify_album = Spotify.get_album(spotify_album_id)
@@ -16,7 +17,7 @@ class Album(object):
             popularity=spotify_album.popularity,
             spotify_id=spotify_album.spotify_id,
             release_date=spotify_album.release_date,
-            genres=genres
+            genres=genres,
         )
         session.add(a)
         session.commit()

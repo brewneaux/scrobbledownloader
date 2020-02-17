@@ -50,9 +50,9 @@ def download_test():
 @cli.option(
     "--replacements-file",
     type=click.Path(exists=True, dir_okay=False),
-    envvar='REPLACEMENTS_FILE',
+    envvar="REPLACEMENTS_FILE",
     required=True,
-    default='/run/replacements.json'
+    default="/run/replacements.json",
 )
 def download(replacements_file):
     """

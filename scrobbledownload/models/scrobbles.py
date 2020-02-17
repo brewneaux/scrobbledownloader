@@ -18,6 +18,7 @@ class ScrobbleTrack(object):
     """
     A single Scrobble Track
     """
+
     track_name: str
     track_mbid: str
     listen_dt: datetime

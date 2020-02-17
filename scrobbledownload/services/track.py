@@ -18,6 +18,7 @@ class Track(object):
     """
     todo rename to add Service
     """
+
     _session: Session
     _scrobble: ScrobbleTrack
     _artist: models.Artist
@@ -25,7 +26,9 @@ class Track(object):
     _track: models.Track
 
     @classmethod
-    def get_track(cls, session: Session, track_name: str, track_artist: str, track_album: str) -> models.Track:
+    def get_track(
+        cls, session: Session, track_name: str, track_artist: str, track_album: str
+    ) -> models.Track:
         """
         Create a Track object, which either loads from the database and returns a model.Track, or builds itself out of
         API calls.
@@ -86,7 +89,7 @@ class Track(object):
             mbid=self._mbid,
             generated_id=self.hash,
             artist=artist,
-            album=album
+            album=album,
         )
         self._session.add(track)
         self._session.commit()

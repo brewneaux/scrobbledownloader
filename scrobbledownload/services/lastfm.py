@@ -49,7 +49,8 @@ class LastFM(object):
         scrobble_json = req.json()
         scrobbles = LastFM._handle_lastfm_response(scrobble_json)
         logging.getLogger(__name__).info(
-            f"Retrieved {len(scrobbles.tracks)} from LastFM API on page {page} of {scrobbles.totalPages}")
+            f"Retrieved {len(scrobbles.tracks)} from LastFM API on page {page} of {scrobbles.totalPages}"
+        )
         return scrobbles
 
     @staticmethod
@@ -62,8 +63,8 @@ class LastFM(object):
         Returns:
             Scrobbles
         """
-        recent_tracks_attr = resp['recenttracks']['@attr']
-        tracks = LastFM._get_tracks(resp['recenttracks']['track'])
+        recent_tracks_attr = resp["recenttracks"]["@attr"]
+        tracks = LastFM._get_tracks(resp["recenttracks"]["track"])
         return Scrobbles(
             page=recent_tracks_attr["page"],
             perPage=recent_tracks_attr["perPage"],
@@ -83,7 +84,7 @@ class LastFM(object):
         """
         tracks = []
         for t in tracks_json:
-            if t.get('@attr', {}).get('nowplaying'):
+            if t.get("@attr", {}).get("nowplaying"):
                 continue
             tracks.append(
                 ScrobbleTrack(

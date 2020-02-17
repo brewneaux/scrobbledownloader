@@ -40,6 +40,6 @@ class ArtistRepository(object):
             name=spotify_artist.name,
             popularity=spotify_artist.popularity,
             spotify_id=spotify_artist.id,
-            genres=genres
+            genres=genres,
         )
         return a

@@ -9,13 +9,13 @@ from spotipy.oauth2 import SpotifyClientCredentials
 
 class Secrets(object):
     _required_keys = [
-        'lastfm_api_key',
-        'lastfm_api_secret',
-        'lastfm_username',
-        'spotify_client_id',
-        'spotify_client_secret',
-        'scrobbles_per_page',
-        'db_connection_string'
+        "lastfm_api_key",
+        "lastfm_api_secret",
+        "lastfm_username",
+        "spotify_client_id",
+        "spotify_client_secret",
+        "scrobbles_per_page",
+        "db_connection_string",
     ]
 
     _path: str = None
@@ -34,13 +34,13 @@ class Secrets(object):
         """
         self._dict = self.load()
         self.validate()
-        self.lastfm_api_key = self._dict['lastfm_api_key']
-        self.lastfm_api_secret = self._dict['lastfm_api_secret']
-        self.lastfm_username = self._dict['lastfm_username']
-        self.spotify_client_id = self._dict['spotify_client_id']
-        self.spotify_client_secret = self._dict['spotify_client_secret']
-        self.scrobbles_per_page = self._dict['scrobbles_per_page']
-        self.db_connection_string = self._dict['db_connection_string']
+        self.lastfm_api_key = self._dict["lastfm_api_key"]
+        self.lastfm_api_secret = self._dict["lastfm_api_secret"]
+        self.lastfm_username = self._dict["lastfm_username"]
+        self.spotify_client_id = self._dict["spotify_client_id"]
+        self.spotify_client_secret = self._dict["spotify_client_secret"]
+        self.scrobbles_per_page = self._dict["scrobbles_per_page"]
+        self.db_connection_string = self._dict["db_connection_string"]
 
     def load(self) -> dict:
         """
@@ -56,7 +56,7 @@ class Secrets(object):
         """
         missing_keys = set(self._required_keys) - set(self._dict.keys())
         if missing_keys:
-            raise KeyError(f'Configuration file did not contain all necessary keys - missing {missing_keys}')
+            raise KeyError(f"Configuration file did not contain all necessary keys - missing {missing_keys}")
 
     @property
     def spotify_credentials(self) -> SpotifyClientCredentials:

@@ -16,7 +16,7 @@ class Artist(object):
             name=spotify_artist.name,
             popularity=spotify_artist.popularity,
             spotify_id=spotify_artist.spotify_id,
-            genres=genres
+            genres=genres,
         )
         session.add(a)
         session.commit()

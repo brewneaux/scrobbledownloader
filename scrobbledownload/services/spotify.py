@@ -18,6 +18,7 @@ class Spotify(object):
     """
     todo rename to add Service
     """
+
     _creds: SpotifyClientCredentials
     _spotify_api: _Spotify
     _replacements: Dict[str, str]
@@ -56,10 +57,7 @@ class Spotify(object):
         """
         a = cls._spotify_api.artist(artist_id)
         return SpotifyArtist(
-            name=a['name'],
-            spotify_id=artist_id,
-            genres=a['genres'],
-            popularity=a.get('popularity')
+            name=a["name"], spotify_id=artist_id, genres=a["genres"], popularity=a.get("popularity"),
         )
 
     @classmethod
@@ -74,12 +72,12 @@ class Spotify(object):
         """
         a = cls._spotify_api.album(album_id)
         return SpotifyAlbum(
-            name=a['name'],
-            spotify_id=a['id'],
-            release_date_str=a['release_date'],
-            release_date_precision=a['release_date_precision'],
-            genres=a['genres'],
-            popularity=a['popularity']
+            name=a["name"],
+            spotify_id=a["id"],
+            release_date_str=a["release_date"],
+            release_date_precision=a["release_date_precision"],
+            genres=a["genres"],
+            popularity=a["popularity"],
         )
 
     @classmethod
@@ -117,7 +115,7 @@ class Spotify(object):
             List(SpotifyTracks)
         """
         results = []
-        for track in response['tracks']['items']:
+        for track in response["tracks"]["items"]:
             # name: str
             # spotify_id: str
             # duration_ms: int
@@ -125,14 +123,16 @@ class Spotify(object):
             # album_id: str
             # artist_id: str
 
-            results.append(SpotifyTrack(
-                name=track['name'],
-                spotify_id=track['id'],
-                duration_ms=track['duration_ms'],
-                popularity=track['popularity'],
-                album_id=track['album']['id'],
-                artist_id=track['artists'][0]
-            ))
+            results.append(
+                SpotifyTrack(
+                    name=track["name"],
+                    spotify_id=track["id"],
+                    duration_ms=track["duration_ms"],
+                    popularity=track["popularity"],
+                    album_id=track["album"]["id"],
+                    artist_id=track["artists"][0],
+                )
+            )
         return results
 
     @classmethod
@@ -166,9 +166,11 @@ class Spotify(object):
             SpotifyTrack
         """
         track_artist = cls.handle_replacements(cls.to_alphanum(track_artist))
-        track_name_words = [cls.handle_replacements(cls.to_alphanum(word)) for word in reversed(track_name.split())]
+        track_name_words = [
+            cls.handle_replacements(cls.to_alphanum(word)) for word in reversed(track_name.split())
+        ]
 
-        results = cls._make_track_query(' '.join(reversed(track_name_words)), track_artist)
+        results = cls._make_track_query(" ".join(reversed(track_name_words)), track_artist)
 
         while track_name_words and not len(results):
             track_name_words.pop()

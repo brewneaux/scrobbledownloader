@@ -10,6 +10,7 @@ class SpotifyArtist(object):
     """
     Representation of an artist from the Spotify API
     """
+
     name: str
     spotify_id: str
     genres: List[str]
@@ -21,6 +22,7 @@ class SpotifyAlbum(object):
     """
     Representation of an album from the Spotify API
     """
+
     name: str
     spotify_id: str
     release_date_str: str
@@ -44,6 +46,7 @@ class SpotifyTrack(object):
     """
     Representation of a track from the Spotify API
     """
+
     name: str
     spotify_id: str
     duration_ms: int
