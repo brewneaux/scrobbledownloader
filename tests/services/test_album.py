@@ -72,4 +72,4 @@ class TestAlbum(TestCase):
         cxn = engine.raw_connection()
         curs = cxn.cursor()
         results = curs.execute("select * from albums").fetchall()
-        assert results == (1, 'test album', 'testid', '2019-02-05', 99)
+        assert results[0] == (1, 'test album', 'testid', '2019-02-05', 99)
