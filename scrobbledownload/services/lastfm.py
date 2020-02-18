@@ -2,7 +2,7 @@ import logging
 from typing import List
 
 import requests
-from dateutil.parser import parse
+from datetime import datetime
 
 from scrobbledownload.models.scrobbles import ScrobbleTrack, Scrobbles
 
@@ -66,9 +66,9 @@ class LastFM(object):
         recent_tracks_attr = resp["recenttracks"]["@attr"]
         tracks = LastFM._get_tracks(resp["recenttracks"]["track"])
         return Scrobbles(
-            page=recent_tracks_attr["page"],
-            perPage=recent_tracks_attr["perPage"],
-            totalPages=recent_tracks_attr["totalPages"],
+            page=int(recent_tracks_attr["page"]),
+            perPage=int(recent_tracks_attr["perPage"]),
+            totalPages=int(recent_tracks_attr["totalPages"]),
             tracks=tracks,
         )
 
@@ -90,7 +90,7 @@ class LastFM(object):
                 ScrobbleTrack(
                     track_name=t["name"],
                     track_mbid=t["mbid"],
-                    listen_dt=parse(t["date"]["#text"]),
+                    listen_dt=datetime.fromtimestamp(int(t["date"]["uts"])),
                     artist=t["artist"]["#text"],
                     artist_mbid=t["artist"]["mbid"],
                     album=t["album"]["#text"],
