@@ -99,7 +99,7 @@ class TestLastFm(TestCase):
         expected = ScrobbleTrack(
             track_name='Go Your Own Way - 2004 Remaster',
             track_mbid='',
-            listen_dt=datetime.datetime(2020, 2, 16, 11, 17, 32),
+            listen_dt=datetime.datetime(2020, 2, 16, 17, 17, 32),
             artist='Fleetwood Mac',
             artist_mbid='',
             album='Rumours',

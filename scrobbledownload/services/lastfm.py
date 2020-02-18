@@ -90,7 +90,7 @@ class LastFM(object):
                 ScrobbleTrack(
                     track_name=t["name"],
                     track_mbid=t["mbid"],
-                    listen_dt=datetime.fromtimestamp(int(t["date"]["uts"])),
+                    listen_dt=datetime.utcfromtimestamp(int(t["date"]["uts"])),
                     artist=t["artist"]["#text"],
                     artist_mbid=t["artist"]["mbid"],
                     album=t["album"]["#text"],
