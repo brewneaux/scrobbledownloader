@@ -1,6 +1,6 @@
 from unittest import TestCase
-from unittest.mock import MagicMock, patch, mock_open
-from scrobbledownload.services.spotify import Spotify
+from unittest.mock import MagicMock, patch, mock_open, call
+from scrobbledownload.services.spotify import Spotify, SpotifyNotFoundExcecption
 from scrobbledownload.models.spotify_models import SpotifyArtist, SpotifyAlbum, SpotifyTrack
 
 from collections import namedtuple
@@ -123,3 +123,65 @@ class TestSpotify(TestCase):
             with self.subTest(input=case.input, expected=case.expected):
                 assert case.expected == Spotify.to_alphanum(case.input)
 
+    def test__handle_spotify_track_response(self):
+        test_response = {
+            'tracks': {
+                'items': [
+                    {
+                        'name': 'testname',
+                        'id': 'testid',
+                        'duration_ms': 12345,
+                        'popularity': 12,
+                        'album': {
+                            'id': "test_album_id"
+                        },
+                        'artists': [
+                            {
+                                'name': "testartist",
+                                'id': 'test_artist_id'
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+        expected = [SpotifyTrack(
+            name='testname',
+            spotify_id='testid',
+            duration_ms=12345,
+            popularity=12,
+            album_id='test_album_id',
+            artist_id='test_artist_id'
+        )]
+        assert expected == Spotify._handle_spotify_track_response(test_response)
+
+    @patch.object(Spotify, '_handle_spotify_track_response')
+    def test__make_track_query(self, mock_respones_handler):
+        _spotify_api_mock = MagicMock()
+        Spotify._spotify_api = _spotify_api_mock
+        expected_search_string = 'test_name artist:test_artist'
+        Spotify._make_track_query('test_name', 'test_artist')
+        _spotify_api_mock.search.assert_called_with(q=expected_search_string, type='track')
+        mock_respones_handler.assert_called()
+        Spotify._spotify_api = None
+
+    @patch.object(Spotify, '_make_track_query')
+    def test_get_track(self, mock_make_track_query):
+        mock_make_track_query.return_value = []
+        Spotify._replacements = {}
+
+        with self.assertRaises(SpotifyNotFoundExcecption) as ctx:
+            Spotify.get_track('this is a long track name', 'test artist')
+        expected_calls = [
+            call('this is a long track name', 'test artist'),
+            call('is a long track name', 'test artist'),
+            call('a long track name', 'test artist'),
+            call('long track name', 'test artist'),
+            call('track name', 'test artist'),
+            call('name', 'test artist'),
+        ]
+        mock_make_track_query.assert_has_calls(expected_calls)
+        assert call('', 'test artist') not in mock_make_track_query.mock_calls
+
+        mock_make_track_query.return_value = ['thing']
+        assert Spotify.get_track('name', 'artist') == 'thing'

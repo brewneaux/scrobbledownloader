@@ -43,7 +43,7 @@ class Spotify(object):
             creds (SpotifyClientCredentials): the client creds for connecting to Spotify
         """
         cls._creds = creds
-        cls._spotify_api = _Spotify(creds)
+        cls._spotify_api = _Spotify(client_credentials_manager=creds)
 
     @classmethod
     def get_artist(cls, artist_id) -> SpotifyArtist:
@@ -116,7 +116,6 @@ class Spotify(object):
         """
         results = []
         for track in response["tracks"]["items"]:
-
             results.append(
                 SpotifyTrack(
                     name=track["name"],
@@ -124,7 +123,7 @@ class Spotify(object):
                     duration_ms=track["duration_ms"],
                     popularity=track["popularity"],
                     album_id=track["album"]["id"],
-                    artist_id=track["artists"][0],
+                    artist_id=track["artists"][0]['id'],
                 )
             )
         return results
@@ -152,6 +151,9 @@ class Spotify(object):
         This method has a little bit of extra magic that has to happen, due to some differences between the LastFM and
         Spotify track/artist/ablum names, punctuation, etc.
 
+        We loop through, chopping words off the FRONT of the track name, since (in my experience) that has better luck
+         finding the actual track we are after.
+
         Args:
             track_name (str): Name of the track
             track_artist (str): Name of the artist
@@ -166,7 +168,7 @@ class Spotify(object):
 
         results = cls._make_track_query(" ".join(reversed(track_name_words)), track_artist)
 
-        while track_name_words and not len(results):
+        while len(track_name_words) > 1 and not len(results):
             track_name_words.pop()
             search_string_track_name = " ".join(list(reversed(track_name_words)))
             results = cls._make_track_query(search_string_track_name, track_artist)
