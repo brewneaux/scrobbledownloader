@@ -116,12 +116,6 @@ class Spotify(object):
         """
         results = []
         for track in response["tracks"]["items"]:
-            # name: str
-            # spotify_id: str
-            # duration_ms: int
-            # popularity: int
-            # album_id: str
-            # artist_id: str
 
             results.append(
                 SpotifyTrack(
