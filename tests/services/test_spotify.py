@@ -107,7 +107,7 @@ class TestSpotify(TestCase):
 
         test_cases = [
             Case('in', 'out'),
-            Case('nothing', 'nothing')
+            Case('nothing', 'asdf')
         ]
         for case in test_cases:
             with self.subTest(input=case.input, expected=case.expected):
